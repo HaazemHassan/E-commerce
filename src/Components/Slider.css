@@ -1,0 +1,13 @@
+.img-carousel {
+    width: 100%;
+    height: 580px; 
+    object-fit: cover;
+  }
+  
+  
+
+  .sahm {
+    color: red;
+    background-color: #ff735c;
+    padding: 5px;
+  }

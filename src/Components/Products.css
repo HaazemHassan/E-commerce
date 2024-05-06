@@ -1,0 +1,52 @@
+.title {
+  color: #ff735c;
+}
+
+.product-desc {
+  height: 100px;
+  overflow: hidden;
+}
+
+
+.product-img {
+  height: 40%;
+  padding: 20px;
+}
+
+.container {
+  padding-top: 10px;
+  text-align: center;
+  
+}
+
+.botton{
+  color:#ff735c;
+  text-decoration: none;
+  border: 2px solid #ff735c;
+  padding: 5px 10px ;
+  font-size: 16px;
+  transition: 0.2s;
+  border-radius: 8px;
+}
+
+.botton:hover {
+background-color: #ff735c;
+color: white;
+font-size: 17px;
+
+}
+
+
+.product-container {
+  border: 1px solid #ff725c25;
+  height: 300px;
+  transition: 0.2s;
+
+  
+}
+
+.product-container:hover {
+  background-color: rgb(251, 247, 247);
+}
+
+
