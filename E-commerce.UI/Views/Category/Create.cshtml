@@ -1,0 +1,58 @@
+﻿@model CategoryAddRequest
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Create Category</h2>
+            <hr />
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="Name" class="p-0"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="DisplayOrder" class="p-0"></label>
+            <input asp-for="DisplayOrder" class="form-control" />
+            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-primary form-control">Create</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="Category" asp-action="Index" class="btn btn-secondary border  form-control">
+                    Back to List
+                </a>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+<script>
+    $(document).ready(function () {
+        $("input[name='Name']").on("blur", function () {
+            var errorLabel = $("span[data-valmsg-for='Name']");
+
+            setTimeout(function () {
+                var errorText = errorLabel.text().trim(); 
+
+                if (errorText === "Name is Already taken") {
+                    errorLabel.removeClass("text-success").addClass("text-danger");
+                } else if (errorText === "" || errorText === null) {
+                    errorLabel.text("✔ Name is valid!").removeClass("text-danger").addClass("text-success");
+                }
+            }, 500);
+        });
+    });
+</script>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
