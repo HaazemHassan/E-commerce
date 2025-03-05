@@ -1,9 +1,9 @@
-﻿using E_commerce.UI.Data;
-using E_commerce.UI.Repositories;
-using E_commerce.UI.RepositoriesContracts;
+﻿using E_commerce.DataAccess.Data;
 using E_commerce.UI.Services;
 using E_commerce.UI.ServicesContracts;
 using Microsoft.EntityFrameworkCore;
+using Repositories;
+using RepositoriesContracts;
 
 namespace E_commerce.UI.StartupExtensions
 {

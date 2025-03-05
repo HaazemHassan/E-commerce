@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>E_commerce.Services</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\E-commerce.Helpers\E-commerce.Helpers.csproj" />
+    <ProjectReference Include="..\RepositoriesContracts\RepositoriesContracts.csproj" />
+    <ProjectReference Include="..\ServicesContracts\ServicesContracts.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,7 @@
-using E_commerce.UI.Models;
+using E_commerce.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+
 
 namespace E_commerce.UI.Controllers
 {
