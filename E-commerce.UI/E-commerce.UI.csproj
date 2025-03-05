@@ -9,9 +9,11 @@
 
   <ItemGroup>
     <Content Remove="CategoriesSeedData.json" />
+    <Content Remove="ProductsSeedData.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="ProductsSeedData.json" />
     <None Include="CategoriesSeedData.json" />
   </ItemGroup>
 
@@ -22,6 +24,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +35,10 @@
     <ProjectReference Include="..\RepositoriesContracts\RepositoriesContracts.csproj" />
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
     <ProjectReference Include="..\ServicesContracts\ServicesContracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

@@ -3,8 +3,9 @@ using E_commerce.UI.ServicesContracts;
 using Microsoft.AspNetCore.Mvc;
 using E_commerce.Models.Extentions;
 
-namespace E_commerce.UI.Controllers
+namespace E_commerce.UI.Areas.Admin.Controllers
 {
+    [Area(nameof(Admin))]
     public class CategoryController : Controller
     {
         private readonly ICategoriesService _categoriesService;
@@ -100,7 +101,7 @@ namespace E_commerce.UI.Controllers
         {
 
             await _categoriesService.DeleteCategoryById(categoryId);
-            TempData["failure"] = "Category deleted successfully";
+            TempData["success"] = "Category deleted successfully";
 
             return RedirectToAction(nameof(Index));
         }

@@ -8,7 +8,7 @@ namespace Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly ApplicationDbContext _db;
+        private readonly ApplicationDbContext _db;
         private readonly DbSet<T> _dbSet;
 
         public Repository(ApplicationDbContext db)
@@ -20,7 +20,6 @@ namespace Repositories
         public async Task<T> Create(T entity)
         {
             await _dbSet.AddAsync(entity);
-            await _db.SaveChangesAsync();
             return entity;
         }
 
@@ -36,18 +35,15 @@ namespace Repositories
         }
 
 
-        public async Task<T?> Delete(T entity)
+        public T? Delete(T entity)
         {
             _dbSet.Remove(entity);
-            await _db.SaveChangesAsync();
             return entity;
-
         }
 
-        public async Task DeleteRange(IEnumerable<T> entity)
+        public void DeleteRange(IEnumerable<T> entity)
         {
             _db.RemoveRange(entity);
-            await _db.SaveChangesAsync();
         }
     }
 }

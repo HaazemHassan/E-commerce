@@ -2,7 +2,6 @@
 using E_commerce.Models;
 using Microsoft.EntityFrameworkCore;
 using RepositoriesContracts;
-using System.Linq.Expressions;
 
 namespace Repositories
 {
@@ -29,7 +28,6 @@ namespace Repositories
             //better than _db.Update(category)
             //because this will update only the changed vaues
             _db.Entry(oldCategory).CurrentValues.SetValues(category);
-            await _db.SaveChangesAsync();
             return category;
 
         }

@@ -10,30 +10,34 @@ namespace E_commerce.UI.Services
 {
     public class CategoriesService : ICategoriesService
     {
-        private readonly ICategoriesRepository _categoriesRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoriesService(ICategoriesRepository categoriesRepository)
+        public CategoriesService(IUnitOfWork categoriesRepository)
         {
-            _categoriesRepository = categoriesRepository;
+            _unitOfWork = categoriesRepository;
         }
 
 
         public async Task<List<CategoryResponse>> GetAllCategories()
         {
-            return (await _categoriesRepository.GetAll()).Select(Category => Category.ToCategoryResponse()).ToList();
+            return (await _unitOfWork.Categories.GetAll()).Select(Category => Category.ToCategoryResponse()).ToList();
         }
 
         public async Task<CategoryResponse> Create(CategoryAddRequest? category)
         {
             ValidationHelper.Validate(category);
 
-            return (await _categoriesRepository.Create(category!.ToCategory())).ToCategoryResponse();
+            CategoryResponse categoryResponse = (await _unitOfWork.Categories.Create(category!.ToCategory())).ToCategoryResponse();
+            await _unitOfWork.CompleteAsync();
+            return categoryResponse;
         }
 
 
         public async Task<CategoryResponse?> GetCategoryByName(string name)
         {
-            return (await _categoriesRepository.Get(c => c.Name == name))?.ToCategoryResponse();
+            CategoryResponse? categoryResponse = (await _unitOfWork.Categories.Get(c => c.Name == name))?.ToCategoryResponse();
+            await _unitOfWork.CompleteAsync();
+            return categoryResponse;
 
         }
 
@@ -45,16 +49,21 @@ namespace E_commerce.UI.Services
             {
                 return null;
             }
-            return (await _categoriesRepository.Get(c => c.Id == id.GetValueOrDefault()))?.ToCategoryResponse();
+
+            CategoryResponse? categoryResponse = (await _unitOfWork.Categories.Get(c => c.Id == id.GetValueOrDefault()))?.ToCategoryResponse();
+            await _unitOfWork.CompleteAsync();
+            return categoryResponse;
+
         }
 
         public async Task<CategoryResponse?> UpdateCategory(CategoryUpdateRequest? category)
         {
             ValidationHelper.Validate(category);
 
-            var response = await _categoriesRepository.UpdateCategory(category!.ToCategory());
+            var response = await _unitOfWork.Categories.UpdateCategory(category!.ToCategory());
             if (response is null)
                 return null;
+            await _unitOfWork.CompleteAsync();
 
             return response.ToCategoryResponse();
 
@@ -64,14 +73,16 @@ namespace E_commerce.UI.Services
         {
             if (id == null)
                 return null;
-            Category? category = await _categoriesRepository.Get(c => c.Id == id);
+            Category? category = await _unitOfWork.Categories.Get(c => c.Id == id);
             if (category is null)
             {
                 return null;
             }
-            var response = await _categoriesRepository.Delete(category);
+            var response = _unitOfWork.Categories.Delete(category);
             if (response is null)
                 return null;
+
+            await _unitOfWork.CompleteAsync();
             return response.ToCategoryResponse();
         }
     }

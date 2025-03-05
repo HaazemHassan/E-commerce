@@ -10,8 +10,8 @@ namespace RepositoriesContracts
         public Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null);
         Task<T?> Get(Expression<Func<T, bool>> filter);
         Task<T> Create(T entity);
-        Task<T?> Delete(T entity);
-        Task DeleteRange(IEnumerable<T> entity);
+        T? Delete(T entity);
+        void DeleteRange(IEnumerable<T> entity);
 
     }
 }
