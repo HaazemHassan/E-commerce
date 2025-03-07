@@ -69,7 +69,7 @@ namespace E_commerce.UI.Areas.Admin.Controllers
 
             if (response is null)
             {
-                return NotFound();
+                return BadRequest();
             }
             TempData["success"] = "Category updated successfully";
             return RedirectToAction(nameof(Index));

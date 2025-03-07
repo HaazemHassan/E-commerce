@@ -443,7 +443,10 @@ th {
 }
 
 label {
-  display: inline-block;
+    display: inline-block;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #333638
 }
 
 button {
@@ -11869,7 +11872,7 @@ th {
 
 .table th,
 .table td {
-  padding: 1.5rem;
+  padding: 0.5rem;
 }
 .table-sm th,
 .table-sm td {

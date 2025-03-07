@@ -15,7 +15,7 @@ namespace Repositories
         {
             _db = db;
             Categories = new CategoriesRepository(_db);
-            Products = new ProductRepository(_db);
+            Products = new ProductsRepository(_db);
         }
 
         public async Task CompleteAsync()

@@ -24,15 +24,41 @@ namespace Repositories
         }
 
 
-        public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null)
+        public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
-            return filter is null ? await _dbSet.ToListAsync() : await _dbSet.Where(filter).ToListAsync();
+            IQueryable<T> query = _dbSet;
+
+            if (filter is not null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
+            return await query.ToListAsync();
         }
 
-        public async Task<T?> Get(Expression<Func<T, bool>> filter)
+        public async Task<T?> Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
-            return await _dbSet.FirstOrDefaultAsync(filter);
+            IQueryable<T> query = _dbSet.Where(filter);
+
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
+            return await query.FirstOrDefaultAsync();
         }
+
 
 
         public T? Delete(T entity)

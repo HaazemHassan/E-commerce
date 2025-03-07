@@ -31,6 +31,7 @@ namespace E_commerce.DataAccess.Data
             modelBuilder.Entity<Product>().HasData(_products);
 
             modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<Product>().HasIndex(p => p.ISBN).IsUnique();
         }
 
 

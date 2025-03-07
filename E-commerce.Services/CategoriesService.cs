@@ -20,7 +20,7 @@ namespace E_commerce.UI.Services
 
         public async Task<List<CategoryResponse>> GetAllCategories()
         {
-            return (await _unitOfWork.Categories.GetAll()).Select(Category => Category.ToCategoryResponse()).ToList();
+            return ( await _unitOfWork.Categories.GetAll()).Select(Category => Category.ToCategoryResponse()).ToList();
         }
 
         public async Task<CategoryResponse> Create(CategoryAddRequest? category)
