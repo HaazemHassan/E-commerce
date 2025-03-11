@@ -4,8 +4,8 @@ using E_commerce.UI.ServicesContracts;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using RepositoriesContracts;
-using E_commerce.Models;
 using Microsoft.AspNetCore.Identity;
+using E_commerce.Models.IdentityEntities;
 
 namespace E_commerce.UI.StartupExtensions
 {
@@ -25,6 +25,16 @@ namespace E_commerce.UI.StartupExtensions
             builder.Services.AddScoped<ICategoriesService, CategoriesService>();
             builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
             builder.Services.AddScoped<IProductsService, ProductsService>();
+
+            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 3;
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+              .AddDefaultTokenProviders();
             return builder;
         }
     }
