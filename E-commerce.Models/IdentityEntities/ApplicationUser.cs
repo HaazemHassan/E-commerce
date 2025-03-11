@@ -14,6 +14,7 @@ namespace E_commerce.Models.IdentityEntities
         public string PersonName { get; set; }
         public string? City { get; set; }
         public string? StreetAddress { get; set; }
+        public string? PostalCode { get; set; }
 
     }
 }
