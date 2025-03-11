@@ -48,14 +48,16 @@
                         </li>
                     </ul>
 
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto d-flex align-items-center">
                         @if (User.Identity is not null && User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
                                 <a class="nav-link">@User.Identity.Name</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a>
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                    <button type="submit" class="nav-link btn btn-link p-0 border-0 m-0" style="background: none;">Logout</button>
+                                </form>
                             </li>
 
                         }

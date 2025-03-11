@@ -18,12 +18,6 @@ namespace E_commerce.UI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -50,16 +44,63 @@ namespace E_commerce.UI.Controllers
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToAction("Index", "Home", new { area = "Customer" });
             }
-            else
+
+
+            foreach (var error in result.Errors)
             {
-                foreach(var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
+                ModelState.AddModelError("", error.Description);
             }
+
 
             return View(registerDTO);
 
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            if (User.Identity?.IsAuthenticated == true)
+                return RedirectToAction("Index", "Home", new { area = "Customer" });
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDTO loginDTO)
+        {
+            if (User.Identity?.IsAuthenticated == true)
+                return RedirectToAction("Index", "Home", new { area = "Customer" });
+
+            if (!ModelState.IsValid)
+                return View(loginDTO);
+
+
+            var result = await _signInManager.PasswordSignInAsync(loginDTO.Email,
+                loginDTO.Password, false, false);
+
+            if (result.Succeeded)
+                return RedirectToAction("Index", "Home", new { area = "Customer" });
+
+         
+            ModelState.AddModelError("Login", "Invalid email or password");
+
+            return View(loginDTO);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            if (User.Identity is not null && User.Identity.IsAuthenticated)
+            {
+                await _signInManager.SignOutAsync();
+                return RedirectToAction("Index", "Home", new { area = "Customer" });
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }
