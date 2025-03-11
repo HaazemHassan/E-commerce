@@ -68,9 +68,9 @@ namespace E_commerce.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginDTO loginDTO)
+        public async Task<IActionResult> Login(LoginDTO loginDTO, string? ReturnUrl)
         {
-            
+
             if (!ModelState.IsValid)
                 return View(loginDTO);
 
@@ -79,7 +79,11 @@ namespace E_commerce.UI.Controllers
                 loginDTO.Password, false, false);
 
             if (result.Succeeded)
+            {
+                if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
+                    return LocalRedirect(ReturnUrl);
                 return RedirectToAction("Index", "Home", new { area = "Customer" });
+            }
 
 
             ModelState.AddModelError("Login", "Invalid email or password");
