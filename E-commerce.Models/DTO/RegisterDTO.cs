@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace E_commerce.Models.DTO
 {
@@ -6,6 +7,7 @@ namespace E_commerce.Models.DTO
     {
         [Required(ErrorMessage = "{0} can't be blank")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Remote(action: "IsEmailNotExists", controller: "Account", ErrorMessage = "Email is already taken")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "{0} can't be blank")]

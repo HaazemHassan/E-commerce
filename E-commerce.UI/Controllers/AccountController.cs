@@ -101,5 +101,16 @@ namespace E_commerce.UI.Controllers
 
         }
 
+
+        //for remote validations
+
+        [HttpGet]
+        public async Task<IActionResult> IsEmailNotExists(string email)
+        {
+            ApplicationUser? user = await _userManager.FindByEmailAsync(email);
+
+            return user == null ? Json(true) : Json(false);
+        }
+
     }
 }
