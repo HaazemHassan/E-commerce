@@ -6,6 +6,7 @@ using Repositories;
 using RepositoriesContracts;
 using Microsoft.AspNetCore.Identity;
 using E_commerce.Models.IdentityEntities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce.UI.StartupExtensions
 {
@@ -35,6 +36,21 @@ namespace E_commerce.UI.StartupExtensions
                 options.Password.RequiredLength = 3;
             }).AddEntityFrameworkStores<ApplicationDbContext>()
               .AddDefaultTokenProviders();
+
+            //enable ahthorization (checks for auzorize attribute)
+            builder.Services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                //options.AccessDeniedPath = "/Account/AccessDenied";
+            });
             return builder;
         }
     }

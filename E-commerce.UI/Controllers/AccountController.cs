@@ -1,11 +1,13 @@
 ﻿using E_commerce.Models.DTO;
 using E_commerce.Models.IdentityEntities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_commerce.UI.Controllers
 {
     [Route("[controller]/[action]")]
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -68,9 +70,7 @@ namespace E_commerce.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginDTO loginDTO)
         {
-            if (User.Identity?.IsAuthenticated == true)
-                return RedirectToAction("Index", "Home", new { area = "Customer" });
-
+            
             if (!ModelState.IsValid)
                 return View(loginDTO);
 
@@ -81,7 +81,7 @@ namespace E_commerce.UI.Controllers
             if (result.Succeeded)
                 return RedirectToAction("Index", "Home", new { area = "Customer" });
 
-         
+
             ModelState.AddModelError("Login", "Invalid email or password");
 
             return View(loginDTO);
@@ -91,15 +91,10 @@ namespace E_commerce.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            if (User.Identity is not null && User.Identity.IsAuthenticated)
-            {
-                await _signInManager.SignOutAsync();
-                return RedirectToAction("Index", "Home", new { area = "Customer" });
-            }
-            else
-            {
-                return BadRequest();
-            }
+
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home", new { area = "Customer" });
+
         }
 
     }

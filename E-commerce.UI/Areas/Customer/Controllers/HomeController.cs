@@ -1,6 +1,7 @@
 using E_commerce.Models;
 using E_commerce.Models.DTO;
 using E_commerce.UI.ServicesContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,7 +9,7 @@ using System.Diagnostics;
 namespace E_commerce.UI.Areas.Customer.Controllers
 {
     [Area(nameof(Customer))]
-
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
