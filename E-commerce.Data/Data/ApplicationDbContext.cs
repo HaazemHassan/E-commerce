@@ -1,4 +1,5 @@
 ﻿using E_commerce.Models;
+using E_commerce.Models.IdentityEntities;
 using E_commerce.Models.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -7,7 +8,7 @@ using System.Text.Json;
 
 namespace E_commerce.DataAccess.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser,ApplicationRole,Guid>
     {
         private readonly static List<Category> _categories = new List<Category>();
         private readonly static List<Product> _products = new List<Product>();
