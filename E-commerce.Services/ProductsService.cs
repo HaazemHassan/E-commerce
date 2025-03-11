@@ -33,7 +33,7 @@ namespace E_commerce.UI.Services
                 return null;
 
             //Category that the user selected must be exists
-            Category? category = await _unitOfWork.Categories.Get(c => c.Id == productAddRequest.CategoryId);
+            Category? category = await _unitOfWork.Categories.Get(c => c.Id == productAddRequest!.CategoryId);
             if (category is null) return null;
 
             ProductResponse productResponse = (await _unitOfWork.Products.Create(productAddRequest!.ToProduct())).ToProductResponse();
@@ -107,10 +107,10 @@ namespace E_commerce.UI.Services
             return response.ToProductResponse();
         }
 
-        public async Task<ProductResponse?> GetProductByISBN(string ISBN)
+        public async Task<ProductResponse?> GetProductByISBN(string ISBN, string? includeProperties = null)
         {
             ISBN = ISBN.Trim().ToLower();
-            ProductResponse? productResponse = (await _unitOfWork.Products.Get(c => c.ISBN == ISBN))?.ToProductResponse();
+            ProductResponse? productResponse = (await _unitOfWork.Products.Get(c => c.ISBN == ISBN,includeProperties))?.ToProductResponse();
             return productResponse;
         }
     }

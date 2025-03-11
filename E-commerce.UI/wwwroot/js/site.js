@@ -12,7 +12,7 @@
 //        var errorLabel = $("span[data-valmsg-for='Name']");
 
 //        setTimeout(function () {
-//            var errorText = errorLabel.text().trim(); 
+//            var errorText = errorLabel.text().trim();
 
 //            if (errorText !== "") {
 //                errorLabel.removeClass("text-success").addClass("text-danger");
@@ -24,3 +24,5 @@
 //});
 
 /////////////////////////////////////////////
+
+

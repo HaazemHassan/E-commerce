@@ -1,4 +1,7 @@
 using E_commerce.UI.StartupExtensions;
+using E_commerce.DataAccess.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce.UI
 {
@@ -8,10 +11,6 @@ namespace E_commerce.UI
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.ConfigureServices();
-
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -26,7 +25,7 @@ namespace E_commerce.UI
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

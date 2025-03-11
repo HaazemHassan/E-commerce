@@ -1,5 +1,6 @@
 ﻿using E_commerce.Models.DTO;
 using E_commerce.Models.Extentions;
+using E_commerce.Models.Models;
 using E_commerce.UI.ServicesContracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -115,7 +116,7 @@ namespace E_commerce.UI.Areas.Admin.Controllers
                 }
 
                 //we should delete the old image
-                if(!string.IsNullOrEmpty(product.ImageUrl))
+                if (!string.IsNullOrEmpty(product.ImageUrl))
                 {
                     string oldImagePath = Path.Combine(wwwRootPath, product.ImageUrl.TrimStart('\\'));
                     if (System.IO.File.Exists(oldImagePath))
@@ -139,36 +140,54 @@ namespace E_commerce.UI.Areas.Admin.Controllers
 
 
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(int? productId)
-        {
-            if (productId == null)
-            {
-                return NotFound();
-            }
+        //[HttpGet]
+        //public async Task<IActionResult> Delete(int? productId)
+        //{
+        //    if (productId == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            ProductResponse? product = await _productsService.GetProductById(productId);
+        //    ProductResponse? product = await _productsService.GetProductById(productId);
 
-            if (product == null)
-            {
-                return NotFound();
-            }
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(product.ToProductUpdateRequest());
-        }
-
-
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeletePost(int? productId)
-        {
-
-            await _productsService.DeleteProductById(productId);
-            TempData["success"] = "Product deleted successfully";
-
-            return RedirectToAction(nameof(Index));
-        }
+        //    return View(product.ToProductUpdateRequest());
+        //}
 
 
+        //public async Task<IActionResult> DeletePost(int? productId)
+        //{
+        //    ProductResponse? product = await _productsService.GetProductById(productId);
+        //    if (product is null)
+        //        return NotFound();
+
+        //    string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+
+        //    //we should delete the old image
+        //    if (!string.IsNullOrEmpty(product.ImageUrl))
+        //    {
+        //        string ImagePath = Path.Combine(wwwRootPath, product.ImageUrl.TrimStart('\\'));
+        //        if (System.IO.File.Exists(ImagePath))
+        //        {
+        //            System.IO.File.Delete(ImagePath);
+        //        }
+        //    }
+
+        //    ProductResponse? deletedProduct = await _productsService.DeleteProductById(productId);
+
+        //    if (deletedProduct is null)
+        //        return NotFound();
+        //    TempData["success"] = "Product deleted successfully";
+
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+        #region used for remote validation
         public async Task<IActionResult> IsProductISBNNotExists(string ISBN, int? Id)
         {
             ProductResponse? product = await _productsService.GetProductByISBN(ISBN);
@@ -179,6 +198,47 @@ namespace E_commerce.UI.Areas.Admin.Controllers
             return Id.HasValue && product.Id == Id ? Json(true) : Json(false);
 
         }
+        #endregion
 
+        #region Api calls
+
+        public async Task<IActionResult> GetAll()
+        {
+            List<ProductResponse> products = (await _productsService.GetAllProducts(nameof(ProductResponse.Category)));
+            return Json(new { data = products });
+
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int? id)
+        {
+
+            ProductResponse? product = await _productsService.GetProductById(id);
+            if (product is null)
+                return Json(new { sucess = "false", message = "Product doesn't exist" });
+
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+
+            //we should delete the image
+            if (!string.IsNullOrEmpty(product.ImageUrl))
+            {
+                string ImagePath = Path.Combine(wwwRootPath, product.ImageUrl.TrimStart('\\'));
+                if (System.IO.File.Exists(ImagePath))
+                {
+                    System.IO.File.Delete(ImagePath);
+                }
+            }
+
+            ProductResponse? deletedProduct = await _productsService.DeleteProductById(id);
+
+            if (deletedProduct is null)
+                return Json(new { sucess = "false", message = "Something went wrong" });
+
+            return Json(new { sucess = "true", message = "Product deleted successfully" });
+
+        }
+
+        #endregion
     }
 }
