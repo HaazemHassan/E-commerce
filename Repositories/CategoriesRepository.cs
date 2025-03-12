@@ -22,7 +22,8 @@ namespace Repositories
 
             bool isNameTaken = await _db.Categories.AnyAsync(c => c.Name == category.Name && c.Id != category.Id);
             if (isNameTaken)
-                throw new ArgumentException("Category name is already taken by another category");
+                return null;
+                //throw new ArgumentException("Category name is already taken by another category");
 
 
             //better than _db.Update(category)

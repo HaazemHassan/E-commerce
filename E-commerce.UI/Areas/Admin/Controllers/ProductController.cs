@@ -12,6 +12,7 @@ namespace E_commerce.UI.Areas.Admin.Controllers
     [Controller]
     [Area(nameof(Admin))]
     [Authorize(Roles = "Admin")]
+    
     public class ProductController : Controller
     {
         private readonly IProductsService _productsService;
@@ -212,6 +213,7 @@ namespace E_commerce.UI.Areas.Admin.Controllers
         }
 
         [HttpDelete]
+        [IgnoreAntiforgeryToken]
         public async Task<IActionResult> Delete(int? id)
         {
 

@@ -10,12 +10,16 @@ namespace Repositories
 
         public ICategoriesRepository Categories { get; private set; }
         public IProductsRepository Products { get; private set; }
+        public ICompaniesRepository Companies { get; private set; }
+
+
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Categories = new CategoriesRepository(_db);
             Products = new ProductsRepository(_db);
+            Companies = new CompaniesRepository(_db);
         }
 
         public async Task CompleteAsync()

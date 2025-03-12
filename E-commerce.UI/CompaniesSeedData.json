@@ -1,0 +1,32 @@
+[
+  {
+    "Id": 1,
+    "Name": "Tech Solutions",
+    "StreetAddress": "123 Tech Street",
+    "City": "Cairo",
+    "Country": "Egypt",
+    "State": "Cairo",
+    "PostalCode": "12345",
+    "PhoneNumber": "01012345678"
+  },
+  {
+    "Id": 2,
+    "Name": "Innovate Hub",
+    "StreetAddress": "456 Innovation Road",
+    "City": "Alexandria",
+    "Country": "Egypt",
+    "State": "Alexandria",
+    "PostalCode": "54321",
+    "PhoneNumber": "01198765432"
+  },
+  {
+    "Id": 3,
+    "Name": "Future Enterprises",
+    "StreetAddress": "789 Future Ave",
+    "City": "Giza",
+    "Country": "Egypt",
+    "State": "Giza",
+    "PostalCode": "67890",
+    "PhoneNumber": "01234567890"
+  }
+]

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="ICompaniesRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\E-commerce.Models\E-commerce.Models.csproj" />
   </ItemGroup>
 

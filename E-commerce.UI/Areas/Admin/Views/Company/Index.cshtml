@@ -1,0 +1,83 @@
+﻿@model List<Company>
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h2 class="text-primary">
+                Company List
+            </h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Company" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i>  Create New Company
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Company Name
+                </th>
+                <th>
+                    Country
+                </th>
+                <th>
+                    City
+                </th>
+                <th>
+                    Street Address
+                </th>
+                <th>
+                    State
+                </th>
+                <th>
+                    Postal Code
+                </th>
+                <th>
+                    Phone Number
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Company in Model)
+            {
+                <tr>
+                    <td>@Company.Name</td>
+                    <td>
+                        @Company.Country
+                    </td>
+                    <td>
+                        @Company.City
+                    </td>
+                    <td>
+                        @Company.StreetAddress
+                    </td>
+                    <td>
+                        @Company.State
+                    </td>
+                    <td>
+                        @Company.PostalCode
+                    </td>
+                    <td>
+                        @Company.PhoneNumber
+                    </td>
+
+                    <td>
+                        <div class="w-50 btn-group" role="group">
+                            <a asp-controller="Company" asp-action="Edit" asp-route-CompanyId="@Company.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a asp-controller="Company" asp-action="Delete" asp-route-CompanyId="@Company.Id" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash-fill"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

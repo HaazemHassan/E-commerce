@@ -36,7 +36,6 @@ namespace E_commerce.UI.Services
         public async Task<CategoryResponse?> GetCategoryByName(string name)
         {
             CategoryResponse? categoryResponse = (await _unitOfWork.Categories.Get(c => c.Name == name))?.ToCategoryResponse();
-            await _unitOfWork.CompleteAsync();
             return categoryResponse;
 
         }

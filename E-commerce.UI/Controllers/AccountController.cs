@@ -1,10 +1,13 @@
 ﻿using E_commerce.Models.DTO;
 using E_commerce.Models.Enums;
 using E_commerce.Models.IdentityEntities;
+using E_commerce.UI.ServicesContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using RepositoriesContracts;
+using System.Threading.Tasks;
 
 namespace E_commerce.UI.Controllers
 {
@@ -15,27 +18,36 @@ namespace E_commerce.UI.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly ICompaniesService _companiesService;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager)
+        public AccountController(UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            RoleManager<ApplicationRole> roleManager,
+            ICompaniesService companiesService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
-
-
+            _companiesService = companiesService;
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
             List<SelectListItem> rolesList = new List<SelectListItem>();
+            List<SelectListItem> companiesList = new List<SelectListItem>();
 
             foreach (var role in Enum.GetValues(typeof(Roles)))
             {
                 rolesList.Add(new SelectListItem(role.ToString(), role.ToString()));
             }
 
+            companiesList = (await _companiesService.GetAllCompanies()).Select(company =>
+                new SelectListItem(company.Name, company.Id.ToString())
+            ).ToList();
+
             ViewBag.Roles = rolesList;
+            ViewBag.Companies = companiesList;
             return View();
         }
 
@@ -44,7 +56,7 @@ namespace E_commerce.UI.Controllers
         {
             if (!ModelState.IsValid)
                 return View(registerDTO);
-            
+
 
             if (!Enum.IsDefined(typeof(Roles), registerDTO.Role))
             {
@@ -67,14 +79,19 @@ namespace E_commerce.UI.Controllers
                 PersonName = registerDTO.PersonName,
                 City = registerDTO.City,
                 StreetAddress = registerDTO.StreetAddress,
-                PostalCode = registerDTO.PostalCode
+                PostalCode = registerDTO.PostalCode,
             };
+
+            if(registerDTO.Role == Roles.Company)
+            {
+                user.CompanyId = registerDTO.CompanyId;
+            }
 
             var result = await _userManager.CreateAsync(user, registerDTO.Password);
 
             if (result.Succeeded)
             {
-                
+
                 await _userManager.AddToRoleAsync(user, registerDTO.Role.ToString());
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToAction("Index", "Home", new { area = "Customer" });
@@ -130,7 +147,7 @@ namespace E_commerce.UI.Controllers
         {
 
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home", new { area = "Customer" });
+            return RedirectToAction(nameof(AccountController.Login));
 
         }
 

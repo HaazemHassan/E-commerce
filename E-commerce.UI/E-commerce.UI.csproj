@@ -9,10 +9,12 @@
 
   <ItemGroup>
     <Content Remove="CategoriesSeedData.json" />
+    <Content Remove="CompaniesSeedData.json" />
     <Content Remove="ProductsSeedData.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="CompaniesSeedData.json" />
     <None Include="ProductsSeedData.json" />
     <None Include="CategoriesSeedData.json" />
   </ItemGroup>
