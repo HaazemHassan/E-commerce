@@ -1,8 +1,10 @@
 ﻿using E_commerce.Models.DTO;
+using E_commerce.Models.Enums;
 using E_commerce.Models.IdentityEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace E_commerce.UI.Controllers
 {
@@ -12,16 +14,28 @@ namespace E_commerce.UI.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
+
+
         }
 
         [HttpGet]
         public IActionResult Register()
         {
+            List<SelectListItem> rolesList = new List<SelectListItem>();
+
+            foreach (var role in Enum.GetValues(typeof(Roles)))
+            {
+                rolesList.Add(new SelectListItem(role.ToString(), role.ToString()));
+            }
+
+            ViewBag.Roles = rolesList;
             return View();
         }
 
@@ -29,7 +43,22 @@ namespace E_commerce.UI.Controllers
         public async Task<IActionResult> Register(RegisterDTO registerDTO)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
+                return View(registerDTO);
+            
+
+            if (!Enum.IsDefined(typeof(Roles), registerDTO.Role))
+            {
+                ModelState.AddModelError("", "Invalid role selected.");
+                return View(registerDTO);
+            }
+
+            if (!await _roleManager.RoleExistsAsync(registerDTO.Role.ToString()))
+            {
+                ApplicationRole role = new ApplicationRole { Name = registerDTO.Role.ToString() };
+                await _roleManager.CreateAsync(role);
+            }
+
+
 
             var user = new ApplicationUser
             {
@@ -40,9 +69,13 @@ namespace E_commerce.UI.Controllers
                 StreetAddress = registerDTO.StreetAddress,
                 PostalCode = registerDTO.PostalCode
             };
+
             var result = await _userManager.CreateAsync(user, registerDTO.Password);
+
             if (result.Succeeded)
             {
+                
+                await _userManager.AddToRoleAsync(user, registerDTO.Role.ToString());
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToAction("Index", "Home", new { area = "Customer" });
             }

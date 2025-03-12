@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using E_commerce.Models.Enums;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace E_commerce.Models.DTO
@@ -28,6 +30,8 @@ namespace E_commerce.Models.DTO
         public string? City { get; set; }
         public string? StreetAddress { get; set; }
         public string? PostalCode { get; set; }
+
+        public Roles Role { get; set; }
 
     }
 }
