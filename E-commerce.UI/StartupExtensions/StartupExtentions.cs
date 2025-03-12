@@ -7,6 +7,7 @@ using RepositoriesContracts;
 using Microsoft.AspNetCore.Identity;
 using E_commerce.Models.IdentityEntities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace E_commerce.UI.StartupExtensions
 {
@@ -15,8 +16,11 @@ namespace E_commerce.UI.StartupExtensions
 
         public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
         {
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddControllersWithViews(options =>
+            //this is to enable antiforgery token validation for all post requests
+            options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute())
+            );
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -50,6 +54,8 @@ namespace E_commerce.UI.StartupExtensions
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";
                 options.AccessDeniedPath = "/Account/AccessDenied";
+                //options.Cookie.SameSite = SameSiteMode.Lax;
+                //options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
             return builder;
         }
