@@ -2,6 +2,7 @@
 using E_commerce.Models.Extentions;
 using E_commerce.Models.Models;
 using E_commerce.UI.ServicesContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ namespace E_commerce.UI.Areas.Admin.Controllers
 {
     [Controller]
     [Area(nameof(Admin))]
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly IProductsService _productsService;

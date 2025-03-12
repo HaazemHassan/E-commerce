@@ -134,6 +134,12 @@ namespace E_commerce.UI.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
 
         //for remote validations
 

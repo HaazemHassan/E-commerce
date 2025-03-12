@@ -49,7 +49,7 @@ namespace E_commerce.UI.StartupExtensions
             {
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";
-                //options.AccessDeniedPath = "/Account/AccessDenied";
+                options.AccessDeniedPath = "/Account/AccessDenied";
             });
             return builder;
         }
