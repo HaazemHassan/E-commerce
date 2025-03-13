@@ -11,7 +11,8 @@ namespace Repositories
         public ICategoriesRepository Categories { get; private set; }
         public IProductsRepository Products { get; private set; }
         public ICompaniesRepository Companies { get; private set; }
-
+        public IShoppingCartsRepository ShoppingCarts { get; private set; }
+        public IApplicationUserRepository ApplicationUsers { get; private set; }
 
 
         public UnitOfWork(ApplicationDbContext db)
@@ -20,6 +21,9 @@ namespace Repositories
             Categories = new CategoriesRepository(_db);
             Products = new ProductsRepository(_db);
             Companies = new CompaniesRepository(_db);
+            ShoppingCarts = new ShoppingCartRepository(_db);
+            ApplicationUsers = new ApplicationUserRepository(_db);
+
         }
 
         public async Task CompleteAsync()

@@ -14,7 +14,7 @@ namespace Repositories
             _db = db;
         }
 
-        public async Task<Category?> UpdateCategory(Category category)
+        public async Task<Category?> Update(Category category)
         {
             Category? oldCategory = await _db.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);
             if (oldCategory == null)

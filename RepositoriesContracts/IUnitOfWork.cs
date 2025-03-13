@@ -8,6 +8,9 @@ namespace RepositoriesContracts
         IProductsRepository Products { get; }
 
         ICompaniesRepository Companies { get; }
+        IShoppingCartsRepository ShoppingCarts { get; }
+
+        IApplicationUserRepository ApplicationUsers { get; }
 
         Task CompleteAsync();
     }

@@ -1,11 +1,7 @@
 ﻿using E_commerce.Helpers;
 using E_commerce.Models;
-using E_commerce.Models.DTO;
-using E_commerce.Models.Extentions;
-using E_commerce.Models.Models;
 using E_commerce.UI.ServicesContracts;
 using RepositoriesContracts;
-using System.Linq.Expressions;
 
 namespace E_commerce.UI.Services
 {
@@ -59,7 +55,7 @@ namespace E_commerce.UI.Services
         {
             ValidationHelper.Validate(Company);
 
-            var response = await _unitOfWork.Companies.UpdateCompany(Company!);
+            var response = await _unitOfWork.Companies.Update(Company!);
             if (response is null)
                 return null;
             await _unitOfWork.CompleteAsync();

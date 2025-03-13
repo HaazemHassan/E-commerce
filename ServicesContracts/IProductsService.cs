@@ -1,5 +1,4 @@
 ﻿using E_commerce.Models.DTO;
-using E_commerce.Models.Models;
 
 namespace E_commerce.UI.ServicesContracts
 {

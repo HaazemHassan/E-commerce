@@ -1,5 +1,6 @@
 ﻿using E_commerce.Models;
 using E_commerce.Models.DTO;
+using E_commerce.Models.IdentityEntities;
 using System.Linq.Expressions;
 
 namespace E_commerce.UI.ServicesContracts
@@ -18,6 +19,6 @@ namespace E_commerce.UI.ServicesContracts
         public Task<CategoryResponse?> DeleteCategoryById(int? id);
         public Task<CategoryResponse?> GetCategoryByName(string name);
 
-
     }
+
 }

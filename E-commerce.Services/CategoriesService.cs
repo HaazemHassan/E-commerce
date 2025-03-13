@@ -28,7 +28,6 @@ namespace E_commerce.UI.Services
             ValidationHelper.Validate(category);
 
             CategoryResponse categoryResponse = (await _unitOfWork.Categories.Create(category!.ToCategory())).ToCategoryResponse();
-            await _unitOfWork.CompleteAsync();
             return categoryResponse;
         }
 
@@ -50,7 +49,6 @@ namespace E_commerce.UI.Services
             }
 
             CategoryResponse? categoryResponse = (await _unitOfWork.Categories.Get(c => c.Id == id.GetValueOrDefault()))?.ToCategoryResponse();
-            await _unitOfWork.CompleteAsync();
             return categoryResponse;
 
         }
@@ -59,7 +57,7 @@ namespace E_commerce.UI.Services
         {
             ValidationHelper.Validate(category);
 
-            var response = await _unitOfWork.Categories.UpdateCategory(category!.ToCategory());
+            var response = await _unitOfWork.Categories.Update(category!.ToCategory());
             if (response is null)
                 return null;
             await _unitOfWork.CompleteAsync();

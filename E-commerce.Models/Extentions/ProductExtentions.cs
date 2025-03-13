@@ -1,6 +1,4 @@
-﻿using E_commerce.Models;
-using E_commerce.Models.DTO;
-using E_commerce.Models.Models;
+﻿using E_commerce.Models.DTO;
 
 namespace E_commerce.Models.Extentions
 {

@@ -1,9 +1,6 @@
 ﻿using E_commerce.Models;
 using E_commerce.Models.IdentityEntities;
-using E_commerce.Models.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
@@ -18,6 +15,7 @@ namespace E_commerce.DataAccess.Data
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
         static ApplicationDbContext()
         {

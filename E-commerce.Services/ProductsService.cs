@@ -2,7 +2,6 @@
 using E_commerce.Models;
 using E_commerce.Models.DTO;
 using E_commerce.Models.Extentions;
-using E_commerce.Models.Models;
 using E_commerce.UI.ServicesContracts;
 using RepositoriesContracts;
 
@@ -81,7 +80,7 @@ namespace E_commerce.UI.Services
             if(string.IsNullOrEmpty(product.ImageUrl))
                 product.ImageUrl = productResponse.ImageUrl;
 
-            var response = await _unitOfWork.Products.UpdateProduct(product!.ToProduct());
+            var response = await _unitOfWork.Products.Update(product!.ToProduct());
             if (response is null)
                 return null;
             await _unitOfWork.CompleteAsync();

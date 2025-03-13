@@ -14,7 +14,7 @@ namespace Repositories
             _db = db;
         }
 
-        public async Task<Company?> UpdateCompany(Company Company)
+        public async Task<Company?> Update(Company Company)
         {
             Company? oldCompany = await _db.Companies.FirstOrDefaultAsync(c => c.Id == Company.Id);
             if (oldCompany == null)

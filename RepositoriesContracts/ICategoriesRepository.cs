@@ -6,7 +6,7 @@ namespace RepositoriesContracts
     public interface ICategoriesRepository : IRepository<Category> 
     {
       
-        public Task<Category?> UpdateCategory(Category category);
+        public Task<Category?> Update(Category category);
    
     
     }
