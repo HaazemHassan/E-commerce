@@ -5,8 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace E_commerce.Models
 {
-   public class ShoppingCart
+    public class ShoppingCart
     {
+        [Key]
         public int Id { get; set; }
 
         public int ProductId { get; set; }
@@ -20,5 +21,8 @@ namespace E_commerce.Models
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
+        
+        [NotMapped]   //won't be created in database
+        public double Price { get; set; }
     }
 }

@@ -29,6 +29,7 @@ namespace E_commerce.UI.Services
             ValidationHelper.Validate(applicationUser);
 
             ApplicationUser applicationUserResponse = (await _unitOfWork.ApplicationUsers.Create(applicationUser!));
+            await _unitOfWork.CompleteAsync();
             return applicationUserResponse;
         }
 

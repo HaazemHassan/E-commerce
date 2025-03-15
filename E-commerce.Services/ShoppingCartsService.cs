@@ -17,7 +17,7 @@ namespace E_commerce.UI.Services
 
         public async Task<List<ShoppingCart>> GetAllShoppingCarts()
         {
-            return ( await _unitOfWork.ShoppingCarts.GetAll()).Select(ShoppingCart => ShoppingCart).ToList();
+            return (await _unitOfWork.ShoppingCarts.GetAll()).Select(ShoppingCart => ShoppingCart).ToList();
         }
 
         public async Task<ShoppingCart> Create(ShoppingCart? shoppingCart)
@@ -25,6 +25,7 @@ namespace E_commerce.UI.Services
             ValidationHelper.Validate(shoppingCart);
 
             ShoppingCart shoppingCartResponse = (await _unitOfWork.ShoppingCarts.Create(shoppingCart!));
+            await _unitOfWork.CompleteAsync();
             return shoppingCartResponse;
         }
 
@@ -40,6 +41,19 @@ namespace E_commerce.UI.Services
             return shoppingCartResponse;
 
         }
+
+        public async Task<ShoppingCart?> GetShoppingCart(int? id,Guid userId)
+        {
+            return await _unitOfWork.ShoppingCarts.Get(c => c.ProductId == id && c.ApplicationUserId == userId);
+        }
+
+        public async Task<List<ShoppingCart>> GetShoppingCartsByUserId(Guid? id,string? includeProperties = null)
+        {
+            return await _unitOfWork.ShoppingCarts.GetAll(c => c.ApplicationUserId == id,includeProperties);
+
+        }
+
+
 
         public async Task<ShoppingCart?> UpdateShoppingCart(ShoppingCart? shoppingCart)
         {

@@ -26,7 +26,7 @@ namespace Repositories
 
         public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
-            IQueryable<T> query = _dbSet;
+            IQueryable<T> query = _dbSet.AsNoTracking();
 
             if (filter is not null)
             {
@@ -44,9 +44,10 @@ namespace Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<T?> Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public async Task<T?> Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
-            IQueryable<T> query = _dbSet.Where(filter);
+
+            IQueryable<T> query = tracked ? _dbSet.Where(filter) : _dbSet.Where(filter).AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(includeProperties))
             {
@@ -58,7 +59,6 @@ namespace Repositories
 
             return await query.FirstOrDefaultAsync();
         }
-
 
 
         public T? Delete(T entity)

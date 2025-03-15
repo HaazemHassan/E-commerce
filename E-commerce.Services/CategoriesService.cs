@@ -28,6 +28,7 @@ namespace E_commerce.UI.Services
             ValidationHelper.Validate(category);
 
             CategoryResponse categoryResponse = (await _unitOfWork.Categories.Create(category!.ToCategory())).ToCategoryResponse();
+            await _unitOfWork.CompleteAsync();
             return categoryResponse;
         }
 

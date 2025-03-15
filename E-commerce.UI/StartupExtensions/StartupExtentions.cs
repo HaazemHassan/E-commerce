@@ -32,6 +32,11 @@ namespace E_commerce.UI.StartupExtensions
             builder.Services.AddScoped<IProductsService, ProductsService>();
             builder.Services.AddScoped<ICompaniesRepository, CompaniesRepository>();
             builder.Services.AddScoped<ICompaniesService, CompaniesService>();
+            builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+            builder.Services.AddScoped<IApplicationUsersService, ApplicationUsersService>();
+            builder.Services.AddScoped<IShoppingCartsRepository, ShoppingCartRepository>();
+            builder.Services.AddScoped<IShoppingCartsService, ShoppingCartsService>();
+
 
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
