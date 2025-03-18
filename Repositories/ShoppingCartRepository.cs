@@ -26,5 +26,19 @@ namespace Repositories
 
         }
 
+        public Task<double> GetTotalPrice(Guid userId)
+        {
+            return _db.ShoppingCarts
+             .Where(c => c.ApplicationUserId == userId)
+             .Include(c => c.Product)
+             .SumAsync(c => c.Product.Price * c.Count);
+        }
+
+
+        public Task<int> GetCount(Guid userId)
+        {
+            return _db.ShoppingCarts.CountAsync(c => c.ApplicationUserId == userId);
+        }
+
     }
 }

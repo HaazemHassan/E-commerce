@@ -1,5 +1,8 @@
-﻿using E_commerce.Models;
+﻿using AutoMapper;
+using E_commerce.Models;
+using E_commerce.Models.IdentityEntities;
 using E_commerce.UI.ServicesContracts;
+using E_commerce_ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -13,20 +16,25 @@ namespace E_commerce.UI.Areas.Customer.Controllers
     {
 
         private readonly IShoppingCartsService _cartsService;
+        private readonly IApplicationUsersService _usersService;
+        private readonly IMapper _mapper;
 
-        public CartController(IShoppingCartsService cartsService)
+        public CartController(IShoppingCartsService cartsService, IApplicationUsersService usersService, IMapper mapper)
         {
             _cartsService = cartsService;
+            _usersService = usersService;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
-            var claimsIdentity = (ClaimsIdentity?)User.Identity;
-            var userId = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = GetCurrentUserId();
+            if (userId is null)
+                return BadRequest("User id not found");
 
             List<ShoppingCart> carts = await _cartsService.GetShoppingCartsByUserId
-                (Guid.Parse(userId!), includeProperties: nameof(Product));
+                (userId, includeProperties: "Product");
 
-            
+
 
             double totalSalary = 0;
             foreach (var cart in carts)
@@ -79,9 +87,23 @@ namespace E_commerce.UI.Areas.Customer.Controllers
 
 
         [HttpGet]
-        public IActionResult Summary()
+        public async Task<IActionResult> Summary()
         {
-            return View();
+            Guid? userId = GetCurrentUserId();
+            if (userId is null)
+                return BadRequest("User not found");
+
+
+            ApplicationUser? user = await _usersService.GetApplicationUserById(userId);
+            var orderSummaryVM = _mapper.Map<OrderSummaryVM>(user);
+
+            var totalPrice = await _cartsService.GetTotalPrice(userId.Value);
+            var cartsCount = await _cartsService.GetCount(userId.Value);
+
+            orderSummaryVM.Price =  totalPrice;
+            orderSummaryVM.Count =  cartsCount;
+
+            return View(orderSummaryVM);
         }
 
 
@@ -94,6 +116,17 @@ namespace E_commerce.UI.Areas.Customer.Controllers
                 return cart.Product.Price50;
             return cart.Product.Price;
 
+
+        }
+
+        private Guid? GetCurrentUserId()
+        {
+            var claimsIdentity = (ClaimsIdentity?)User.Identity;
+            var userId = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Guid userIdParsed;
+            if (Guid.TryParse(userId, out userIdParsed))
+                return userIdParsed;
+            return null;
 
         }
 

@@ -71,7 +71,6 @@ namespace E_commerce.UI.Controllers
             }
 
 
-
             var user = new ApplicationUser
             {
                 Email = registerDTO.Email,
@@ -80,6 +79,8 @@ namespace E_commerce.UI.Controllers
                 City = registerDTO.City,
                 StreetAddress = registerDTO.StreetAddress,
                 PostalCode = registerDTO.PostalCode,
+                PhoneNumber = registerDTO.PhoneNumber,
+             
             };
 
             if(registerDTO.Role == Roles.Company)

@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using E_commerce.Models.DTO;
+using E_commerce.Models.IdentityEntities;
+using E_commerce_ViewModels;
 
 namespace E_commerce.Helpers
 {
@@ -25,6 +27,10 @@ namespace E_commerce.Helpers
             CreateMap<CategoryUpdateRequest, Category>();
             CreateMap<Category, CategoryResponse>();
             CreateMap<CategoryResponse, CategoryUpdateRequest>();
+            CreateMap<ApplicationUser, OrderSummaryVM>().
+                ForMember(dest => dest.PhoneNumber,
+                opt => opt.MapFrom(src => src.PhoneNumber));
+
         }
     }
 }

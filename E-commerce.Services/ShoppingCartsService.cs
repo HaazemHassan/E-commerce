@@ -42,18 +42,26 @@ namespace E_commerce.UI.Services
 
         }
 
-        public async Task<ShoppingCart?> GetShoppingCart(int? id,Guid userId)
+        public async Task<ShoppingCart?> GetShoppingCart(int? id, Guid userId)
         {
             return await _unitOfWork.ShoppingCarts.Get(c => c.ProductId == id && c.ApplicationUserId == userId);
         }
 
-        public async Task<List<ShoppingCart>> GetShoppingCartsByUserId(Guid? id,string? includeProperties = null)
+        public async Task<List<ShoppingCart>> GetShoppingCartsByUserId(Guid? id, string? includeProperties = null)
         {
-            return await _unitOfWork.ShoppingCarts.GetAll(c => c.ApplicationUserId == id,includeProperties);
+            return await _unitOfWork.ShoppingCarts.GetAll(c => c.ApplicationUserId == id, includeProperties);
 
         }
 
+        public Task<double> GetTotalPrice(Guid userId)
+        {
+            return _unitOfWork.ShoppingCarts.GetTotalPrice(userId);
+        }
 
+        public Task<int> GetCount(Guid userId)
+        {
+           return _unitOfWork.ShoppingCarts.GetCount(userId); 
+        }
 
         public async Task<ShoppingCart?> UpdateShoppingCart(ShoppingCart? shoppingCart)
         {

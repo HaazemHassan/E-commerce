@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\E-commerce-ViewModels\E-commerce-ViewModels.csproj" />
     <ProjectReference Include="..\E-commerce.Data\E-commerce.DataAccess.csproj" />
     <ProjectReference Include="..\E-commerce.Helpers\E-commerce.Helpers.csproj" />
     <ProjectReference Include="..\E-commerce.Models\E-commerce.Models.csproj" />
