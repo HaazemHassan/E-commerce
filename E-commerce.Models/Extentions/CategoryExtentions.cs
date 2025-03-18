@@ -1,49 +1,34 @@
-﻿using E_commerce.Models;
+﻿using AutoMapper;
+using E_commerce.Models;
 using E_commerce.Models.DTO;
 
 namespace E_commerce.Models.Extentions
 {
     public static class CategoryExtensions
     {
-        public static Category ToCategory(this CategoryAddRequest categoryAddRequest)
+        public static Category ToCategory(this CategoryAddRequest categoryAddRequest, IMapper mapper)
         {
-            return new Category
-            {
-                Name = categoryAddRequest.Name,
-                DisplayOrder = categoryAddRequest.DisplayOrder
-            };
+            return mapper.Map<Category>(categoryAddRequest);
         }
 
 
-        public static Category ToCategory(this CategoryUpdateRequest category)
+        public static Category ToCategory(this CategoryUpdateRequest category, IMapper mapper)
         {
-            return new Category
-            {
-                Id = category.Id,
-                Name = category.Name,
-                DisplayOrder = category.DisplayOrder
-            };
+            return mapper.Map<Category>(category);
+
         }
 
 
-        public static CategoryResponse ToCategoryResponse(this Category category)
+        public static CategoryResponse ToCategoryResponse(this Category category, IMapper mapper)
         {
-            return new CategoryResponse
-            {
-                Id = category.Id,
-                Name = category.Name,
-                DisplayOrder = category.DisplayOrder
-            };
+            return mapper.Map<CategoryResponse>(category);
+
         }
 
-        public static CategoryUpdateRequest ToCategoryUpdateRequest(this CategoryResponse category)
+        public static CategoryUpdateRequest ToCategoryUpdateRequest(this CategoryResponse category, IMapper mapper)
         {
-            return new CategoryUpdateRequest
-            {
-                Id = category.Id,
-                Name = category.Name,
-                DisplayOrder = category.DisplayOrder
-            };
+            return mapper.Map<CategoryUpdateRequest>(category);
+
         }
     }
 

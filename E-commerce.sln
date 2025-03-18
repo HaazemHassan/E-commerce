@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoriesContracts", "Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{3E06FCEF-E809-4BB7-8249-2E42FAAB0C5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-commerce-ViewModels", "E-commerce-ViewModels\E-commerce-ViewModels.csproj", "{C89F2CE4-34B4-470A-89D5-653C5CD3B432}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,8 +59,15 @@ Global
 		{3E06FCEF-E809-4BB7-8249-2E42FAAB0C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E06FCEF-E809-4BB7-8249-2E42FAAB0C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E06FCEF-E809-4BB7-8249-2E42FAAB0C5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C89F2CE4-34B4-470A-89D5-653C5CD3B432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C89F2CE4-34B4-470A-89D5-653C5CD3B432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C89F2CE4-34B4-470A-89D5-653C5CD3B432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C89F2CE4-34B4-470A-89D5-653C5CD3B432}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F1984758-22C6-452B-A705-E6D06104E0EB}
 	EndGlobalSection
 EndGlobal

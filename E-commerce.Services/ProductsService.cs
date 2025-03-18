@@ -1,4 +1,5 @@
-﻿using E_commerce.Helpers;
+﻿using AutoMapper;
+using E_commerce.Helpers;
 using E_commerce.Models;
 using E_commerce.Models.DTO;
 using E_commerce.Models.Extentions;
@@ -10,16 +11,18 @@ namespace E_commerce.UI.Services
     public class ProductsService : IProductsService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public ProductsService(IUnitOfWork unitOfWork)
+        public ProductsService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
 
         public async Task<List<ProductResponse>> GetAllProducts(string? includeProperties = null)
         {
-            return (await _unitOfWork.Products.GetAll(includeProperties:includeProperties)).Select(Product => Product.ToProductResponse()).ToList();
+            return (await _unitOfWork.Products.GetAll(includeProperties:includeProperties)).Select(Product => Product.ToProductResponse(_mapper)).ToList();
         }
 
         public async Task<ProductResponse?> Create(ProductAddRequest? productAddRequest)
@@ -35,7 +38,7 @@ namespace E_commerce.UI.Services
             Category? category = await _unitOfWork.Categories.Get(c => c.Id == productAddRequest!.CategoryId);
             if (category is null) return null;
 
-            ProductResponse productResponse = (await _unitOfWork.Products.Create(productAddRequest!.ToProduct())).ToProductResponse();
+            ProductResponse productResponse = (await _unitOfWork.Products.Create(productAddRequest!.ToProduct(_mapper))).ToProductResponse(_mapper);
             await _unitOfWork.CompleteAsync();
             return productResponse;
         }
@@ -43,7 +46,7 @@ namespace E_commerce.UI.Services
 
         public async Task<ProductResponse?> GetProductByTitle(string title, string? includeProperties = null)
         {
-            ProductResponse? productResponse = (await _unitOfWork.Products.Get(c => c.Title == title,includeProperties))?.ToProductResponse();
+            ProductResponse? productResponse = (await _unitOfWork.Products.Get(c => c.Title == title,includeProperties))?.ToProductResponse(_mapper);
             return productResponse;
 
         }
@@ -57,7 +60,7 @@ namespace E_commerce.UI.Services
                 return null;
             }
 
-            ProductResponse? productResponse = (await _unitOfWork.Products.Get(c => c.Id == id.GetValueOrDefault(),includeProperties))?.ToProductResponse();
+            ProductResponse? productResponse = (await _unitOfWork.Products.Get(c => c.Id == id.GetValueOrDefault(),includeProperties))?.ToProductResponse(_mapper);
             return productResponse;
 
         }
@@ -80,12 +83,12 @@ namespace E_commerce.UI.Services
             if(string.IsNullOrEmpty(product.ImageUrl))
                 product.ImageUrl = productResponse.ImageUrl;
 
-            var response = await _unitOfWork.Products.Update(product!.ToProduct());
+            var response = await _unitOfWork.Products.Update(product!.ToProduct(_mapper));
             if (response is null)
                 return null;
             await _unitOfWork.CompleteAsync();
 
-            return response.ToProductResponse();
+            return response.ToProductResponse(_mapper);
 
         }
 
@@ -103,13 +106,13 @@ namespace E_commerce.UI.Services
                 return null;
 
             await _unitOfWork.CompleteAsync();
-            return response.ToProductResponse();
+            return response.ToProductResponse(_mapper);
         }
 
         public async Task<ProductResponse?> GetProductByISBN(string ISBN, string? includeProperties = null)
         {
             ISBN = ISBN.Trim().ToLower();
-            ProductResponse? productResponse = (await _unitOfWork.Products.Get(c => c.ISBN == ISBN,includeProperties))?.ToProductResponse();
+            ProductResponse? productResponse = (await _unitOfWork.Products.Get(c => c.ISBN == ISBN,includeProperties))?.ToProductResponse(_mapper);
             return productResponse;
         }
     }

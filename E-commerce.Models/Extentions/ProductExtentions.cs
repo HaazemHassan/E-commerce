@@ -1,87 +1,35 @@
-﻿using E_commerce.Models.DTO;
+﻿using AutoMapper;
+using E_commerce.Models.DTO;
 
 namespace E_commerce.Models.Extentions
 {
     public static class ProductExtensions
     {
-        public static Product ToProduct(this ProductAddRequest productAddRequest)
+        //we should use auto mapper in the services and cotnrollers instead of using all those methods
+        //but for time being i will use it here
+        public static Product ToProduct(this ProductAddRequest productAddRequest, IMapper mapper)
         {
-            return new Product
-            {
-                Author = productAddRequest.Author,
-                Description = productAddRequest.Description,
-                ISBN = productAddRequest.ISBN,
-                ListPrice = productAddRequest.ListPrice,
-                Price = productAddRequest.Price,
-                Price100 = productAddRequest.Price100,
-                Price50 = productAddRequest.Price50,
-                Title = productAddRequest.Title,
-                Category = productAddRequest.Category,
-                CategoryId = productAddRequest.CategoryId,
-                ImageUrl = productAddRequest.ImageUrl,
-            };
+            return mapper.Map<Product>(productAddRequest);
         }
 
 
-        public static Product ToProduct(this ProductUpdateRequest product)
+        public static Product ToProduct(this ProductUpdateRequest product, IMapper mapper)
         {
-            return new Product
-            {
-                Id = product.Id,
-                Author = product.Author,
-                Description = product.Description,
-                Title = product.Title,
-                ListPrice = product.ListPrice,
-                Price = product.Price,
-                Price100 = product.Price100,
-                Price50 = product.Price50,
-                ISBN = product.ISBN,
-                Category = product.Category,
-                CategoryId = product.CategoryId,
-                ImageUrl = product.ImageUrl,
+            return mapper.Map<Product>(product);
 
-            };
         }
 
 
-        public static ProductResponse ToProductResponse(this Product product)
+        public static ProductResponse ToProductResponse(this Product product, IMapper mapper)
         {
-            return new ProductResponse
-            {
-                Title = product.Title,
-                Author = product.Author,
-                Description = product.Description,
-                ISBN = product.ISBN,
-                ListPrice = product.ListPrice,
-                Id = product.Id,
-                Price = product.Price,
-                Price100 = product.Price100,
-                Price50 = product.Price50,
-                Category = product.Category,
-                CategoryId = product.CategoryId,
-                ImageUrl = product.ImageUrl,
+            return mapper.Map<ProductResponse>(product);
 
-
-            };
         }
 
-        public static ProductUpdateRequest ToProductUpdateRequest(this ProductResponse product)
+        public static ProductUpdateRequest ToProductUpdateRequest(this ProductResponse product, IMapper mapper)
         {
-            return new ProductUpdateRequest
-            {
-                Id = product.Id,
-                Title = product.Title,
-                Author = product.Author,
-                Description = product.Description,
-                ISBN = product.ISBN,
-                ListPrice = product.ListPrice,
-                Price = product.Price,
-                Price100 = product.Price100,
-                Price50 = product.Price50,
-                Category = product.Category,
-                CategoryId = product.CategoryId,
-                ImageUrl = product.ImageUrl,
-            };
+            return mapper.Map<ProductUpdateRequest>(product);
+
         }
     }
 

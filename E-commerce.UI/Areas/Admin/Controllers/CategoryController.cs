@@ -3,6 +3,7 @@ using E_commerce.UI.ServicesContracts;
 using Microsoft.AspNetCore.Mvc;
 using E_commerce.Models.Extentions;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace E_commerce.UI.Areas.Admin.Controllers
 {
@@ -11,10 +12,12 @@ namespace E_commerce.UI.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoriesService _categoriesService;
+        private readonly IMapper _mapper;
 
-        public CategoryController(ICategoriesService categoriesService)
+        public CategoryController(ICategoriesService categoriesService,IMapper mapper)
         {
             _categoriesService = categoriesService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -60,7 +63,7 @@ namespace E_commerce.UI.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(category.ToCategoryUpdateRequest());
+            return View(category.ToCategoryUpdateRequest(_mapper));
         }
 
 
@@ -94,7 +97,7 @@ namespace E_commerce.UI.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(category.ToCategoryUpdateRequest());
+            return View(category.ToCategoryUpdateRequest(_mapper));
         }
 
 

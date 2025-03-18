@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using E_commerce.Models.IdentityEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using E_commerce.Helpers;
 
 namespace E_commerce.UI.StartupExtensions
 {
@@ -64,6 +65,11 @@ namespace E_commerce.UI.StartupExtensions
                 //options.Cookie.SameSite = SameSiteMode.Lax;  default
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
+
+
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+
             return builder;
         }
     }

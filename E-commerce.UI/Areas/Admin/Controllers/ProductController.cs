@@ -1,4 +1,5 @@
-﻿using E_commerce.Models.DTO;
+﻿using AutoMapper;
+using E_commerce.Models.DTO;
 using E_commerce.Models.Extentions;
 using E_commerce.UI.ServicesContracts;
 using Microsoft.AspNetCore.Authorization;
@@ -16,12 +17,15 @@ namespace E_commerce.UI.Areas.Admin.Controllers
         private readonly IProductsService _productsService;
         private readonly ICategoriesService _categoriesService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IMapper _mapper;
 
-        public ProductController(IProductsService productService, ICategoriesService categoriesService, IWebHostEnvironment webHostEnvironment)
+        public ProductController(IProductsService productService, ICategoriesService categoriesService, IWebHostEnvironment webHostEnvironment,IMapper
+             mapper)
         {
             _productsService = productService;
             _categoriesService = categoriesService;
             _webHostEnvironment = webHostEnvironment;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
@@ -95,7 +99,7 @@ namespace E_commerce.UI.Areas.Admin.Controllers
 
             ViewBag.Categories = categoriesList;
 
-            return View(product.ToProductUpdateRequest());
+            return View(product.ToProductUpdateRequest(_mapper));
         }
 
 
