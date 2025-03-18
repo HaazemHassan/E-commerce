@@ -1,7 +1,4 @@
-﻿using E_commerce.Models;
-using E_commerce.Models.DTO;
-using E_commerce.Models.IdentityEntities;
-using System.Linq.Expressions;
+﻿using E_commerce.Models.IdentityEntities;
 
 namespace E_commerce.UI.ServicesContracts
 {

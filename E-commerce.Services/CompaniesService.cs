@@ -9,9 +9,9 @@ namespace E_commerce.UI.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CompaniesService(IUnitOfWork CompaniesRepository)
+        public CompaniesService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = CompaniesRepository;
+            _unitOfWork = unitOfWork;
         }
 
 

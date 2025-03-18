@@ -11,6 +11,8 @@ namespace RepositoriesContracts
         IShoppingCartsRepository ShoppingCarts { get; }
 
         IApplicationUserRepository ApplicationUsers { get; }
+        IOrdersRepository Orders { get; }
+        IOrdersDetailRepository OrdersDetail { get; }
 
         Task CompleteAsync();
     }

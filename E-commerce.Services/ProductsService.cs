@@ -11,9 +11,9 @@ namespace E_commerce.UI.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public ProductsService(IUnitOfWork categoriesRepository)
+        public ProductsService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = categoriesRepository;
+            _unitOfWork = unitOfWork;
         }
 
 

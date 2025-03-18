@@ -1,5 +1,6 @@
 ﻿using E_commerce.Models;
 using E_commerce.Models.IdentityEntities;
+using E_commerce.Models.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -16,6 +17,8 @@ namespace E_commerce.DataAccess.Data
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderDetail> OrdeRSDetail { get; set; }
 
         static ApplicationDbContext()
         {

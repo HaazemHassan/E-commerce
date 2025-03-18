@@ -13,6 +13,8 @@ namespace Repositories
         public ICompaniesRepository Companies { get; private set; }
         public IShoppingCartsRepository ShoppingCarts { get; private set; }
         public IApplicationUserRepository ApplicationUsers { get; private set; }
+        public IOrdersRepository Orders { get; private set; }
+        public IOrdersDetailRepository OrdersDetail { get; private set; }
 
 
         public UnitOfWork(ApplicationDbContext db)
@@ -23,7 +25,8 @@ namespace Repositories
             Companies = new CompaniesRepository(_db);
             ShoppingCarts = new ShoppingCartRepository(_db);
             ApplicationUsers = new ApplicationUserRepository(_db);
-
+            Orders = new OrdersRepository(_db);
+            OrdersDetail = new OrdersDetailRepository(_db);
         }
 
         public async Task CompleteAsync()
