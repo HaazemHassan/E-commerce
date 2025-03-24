@@ -1,4 +1,5 @@
 ﻿using E_commerce.DataAccess.Data;
+using E_commerce.Models.Enums;
 using E_commerce.Models.Models;
 using Microsoft.EntityFrameworkCore;
 using RepositoriesContracts;
@@ -20,13 +21,42 @@ namespace Repositories
             if (oldOrder == null)
                 return null;
 
-            bool isNameTaken = await _db.Orders.AnyAsync(o => o.Name == order.Name && o.Id != order.Id);
+            bool isNameTaken = await _db.Orders.AnyAsync(o => o.PersonName == order.PersonName && o.Id != order.Id);
             if (isNameTaken)
                 return null;
 
             _db.Entry(oldOrder).CurrentValues.SetValues(order);
             return order;
 
+        }
+
+        public async Task UpdateStatus(int id, OrderStatus orderStatus, PaymentStatus? paymentStatus)
+        {
+            var orderFromDb = await _db.Orders.FirstOrDefaultAsync(u => u.Id == id);
+            if (orderFromDb != null)
+            {
+                orderFromDb.OrderStatus = orderStatus;
+                if (paymentStatus is not null)
+                {
+                    orderFromDb.PaymentStatus = paymentStatus.Value;
+                }
+            }
+        }
+
+        public async Task UpdateStripePaymentID(int id, string sessionId, string paymentIntentId)
+        {
+            var orderFromDb = await _db.Orders.FirstOrDefaultAsync(u => u.Id == id);
+            if (orderFromDb is null)
+                return;
+            if (!string.IsNullOrEmpty(sessionId))
+            {
+                orderFromDb.SessionId = sessionId;
+            }
+            if (!string.IsNullOrEmpty(paymentIntentId))
+            {
+                orderFromDb.PaymentIntentId = paymentIntentId;
+                orderFromDb.PaymentDate = DateTime.Now;
+            }
         }
 
     }

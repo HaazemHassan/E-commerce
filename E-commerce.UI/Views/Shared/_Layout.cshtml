@@ -68,7 +68,7 @@
                             int cartCount = 0;
                             if (userId is not null)
                             {
-                                cartCount = (await CartService.GetShoppingCartsByUserId(Guid.Parse(userId))).Count;
+                                cartCount = (await CartService.GetShoppingCarts(Guid.Parse(userId))).Count;
                             }
 
                             <li class="nav-item">

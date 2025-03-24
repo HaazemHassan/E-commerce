@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Stripe.net" Version="47.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\E-commerce.Helpers\E-commerce.Helpers.csproj" />
     <ProjectReference Include="..\RepositoriesContracts\RepositoriesContracts.csproj" />
     <ProjectReference Include="..\ServicesContracts\ServicesContracts.csproj" />

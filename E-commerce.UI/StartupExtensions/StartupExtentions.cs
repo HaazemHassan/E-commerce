@@ -9,6 +9,7 @@ using E_commerce.Models.IdentityEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using E_commerce.Helpers;
+using E_commerce.Services;
 
 namespace E_commerce.UI.StartupExtensions
 {
@@ -37,6 +38,12 @@ namespace E_commerce.UI.StartupExtensions
             builder.Services.AddScoped<IApplicationUsersService, ApplicationUsersService>();
             builder.Services.AddScoped<IShoppingCartsRepository, ShoppingCartRepository>();
             builder.Services.AddScoped<IShoppingCartsService, ShoppingCartsService>();
+            builder.Services.AddScoped<IOrdersRepository,OrdersRepository>();
+            builder.Services.AddScoped<IOrdersService, OrdersService>();
+            builder.Services.AddScoped<IOrdersDetailRepository, OrdersDetailRepository>();
+            builder.Services.AddScoped<IOrdersDetailService, OrdersDetailService>();
+            builder.Services.AddScoped<StripeService>();
+
 
 
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -68,6 +75,7 @@ namespace E_commerce.UI.StartupExtensions
 
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
+            
 
 
             return builder;

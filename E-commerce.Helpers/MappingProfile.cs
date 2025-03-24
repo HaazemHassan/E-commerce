@@ -31,6 +31,11 @@ namespace E_commerce.Helpers
                 ForMember(dest => dest.PhoneNumber,
                 opt => opt.MapFrom(src => src.PhoneNumber));
 
+            CreateMap<OrderSummaryVM, Order>();
+
+            CreateMap<ShoppingCart, OrderDetail>().ForMember(dest => dest.Id ,
+                opt => opt.Ignore());
+
         }
     }
 }

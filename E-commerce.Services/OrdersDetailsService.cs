@@ -2,6 +2,7 @@
 using E_commerce.Models.Models;
 using E_commerce.UI.ServicesContracts;
 using RepositoriesContracts;
+using System.Linq.Expressions;
 
 namespace E_commerce.UI.Services
 {
@@ -15,9 +16,9 @@ namespace E_commerce.UI.Services
         }
 
 
-        public async Task<List<OrderDetail>> GetAll()
+        public async Task<List<OrderDetail>> GetAll(Expression<Func<OrderDetail, bool>>? filter = null, string? includeProperties = null)
         {
-            return ( await _unitOfWork.OrdersDetail.GetAll()).Select(OrderDetail => OrderDetail).ToList();
+            return (await _unitOfWork.OrdersDetail.GetAll()).ToList();
         }
 
         public async Task<OrderDetail> Create(OrderDetail? order)

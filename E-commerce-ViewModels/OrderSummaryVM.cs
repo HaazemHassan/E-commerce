@@ -1,11 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using E_commerce.Models;
+using E_commerce.Models.IdentityEntities;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace E_commerce_ViewModels
 {
     public class OrderSummaryVM
     {
+        [ValidateNever]
         [Required]
-        [Display(Name="Phone number")]
+        public Guid ApplicationUserId { get; set; }
+
+        public List<ShoppingCart> ShoppingCartList { get; set; } = new List<ShoppingCart>();
+
+        [Required]
+        [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 
         [Required]

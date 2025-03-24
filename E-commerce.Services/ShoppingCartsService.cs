@@ -46,8 +46,12 @@ namespace E_commerce.UI.Services
         {
             return await _unitOfWork.ShoppingCarts.Get(c => c.ProductId == id && c.ApplicationUserId == userId);
         }
+        public async Task<List<ShoppingCart>> GetShoppingCarts(Guid userId)
+        {
+            return await _unitOfWork.ShoppingCarts.GetAll(c => c.ApplicationUserId == userId);
+        }
 
-        public async Task<List<ShoppingCart>> GetShoppingCartsByUserId(Guid? id, string? includeProperties = null)
+        public async Task<List<ShoppingCart>> GetShoppingCarts(Guid? id, string? includeProperties = null)
         {
             return await _unitOfWork.ShoppingCarts.GetAll(c => c.ApplicationUserId == id, includeProperties);
 
@@ -60,7 +64,7 @@ namespace E_commerce.UI.Services
 
         public Task<int> GetCount(Guid userId)
         {
-           return _unitOfWork.ShoppingCarts.GetCount(userId); 
+            return _unitOfWork.ShoppingCarts.GetCount(userId);
         }
 
         public async Task<ShoppingCart?> UpdateShoppingCart(ShoppingCart? shoppingCart)
@@ -91,6 +95,22 @@ namespace E_commerce.UI.Services
 
             await _unitOfWork.CompleteAsync();
             return response;
+        }
+
+        public double GetPriceBasedOnQuantity(ShoppingCart cart)
+        {
+            if (cart.Count > 100)
+                return cart.Product.Price100;
+            if (cart.Count > 50)
+                return cart.Product.Price50;
+            return cart.Product.Price;
+
+        }
+
+        public async Task DeleteRange(IEnumerable<ShoppingCart> carts)
+        {
+            _unitOfWork.ShoppingCarts.DeleteRange(carts);
+            await _unitOfWork.CompleteAsync();
         }
     }
 }

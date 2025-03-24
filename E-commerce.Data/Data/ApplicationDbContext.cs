@@ -18,7 +18,7 @@ namespace E_commerce.DataAccess.Data
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<OrderDetail> OrdeRSDetail { get; set; }
+        public virtual DbSet<OrderDetail> OrdersDetail { get; set; }
 
         static ApplicationDbContext()
         {

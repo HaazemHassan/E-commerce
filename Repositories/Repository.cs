@@ -70,6 +70,7 @@ namespace Repositories
         public void DeleteRange(IEnumerable<T> entity)
         {
             _db.RemoveRange(entity);
+
         }
     }
 }

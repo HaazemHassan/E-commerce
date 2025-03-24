@@ -19,7 +19,7 @@ namespace E_commerce.Models.Models
         public int ProductId { get; set; }
 
         [ForeignKey(nameof(ProductId))]
-        [ValidateNever]
+        [ValidateNever]    
         public Product Product { get; set; }
 
         public int Count { get; set; }
